@@ -24,7 +24,7 @@ public class IntentParser {
         return null;
     }
 
-    private static void die(String s) {
+    private static void die   (String s) {
         throw new IllegalArgumentException("Intent parse error for " + s);
     }
 }

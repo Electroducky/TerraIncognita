@@ -16,15 +16,18 @@ public class Game {
     private int currentPlayerIndex = 0;
     private int playerAmount;
 
-    public Game(Labyrinth labyrinth, int playerAmount) {
-        this.labyrinth = labyrinth;
-        this.playerAmount = playerAmount;
-        populatePlayers();
+    public Game(Settings settings) {
+        this.labyrinth = Labyrinth.generate(settings.getLabyrinthSize());
+        playerAmount = settings.getPlayerAmount();
+        populatePlayers(settings.getNames());
     }
 
-    private void populatePlayers() {
-        for (int i = 0; i < playerAmount; i++)
-            players.add(new Player());
+    private void populatePlayers(String[] names) {
+        for (int i = 0; i < playerAmount; i++) {
+            if (names == null || names[i] == null)
+                players.add(new Player());
+            else players.add(new Player(names[i]));
+        }
     }
 
     public TurnResult start() {
@@ -59,9 +62,7 @@ public class Game {
     }
 
     private TurnResult currentResult() {
-        return new TurnResult()
-                .setCurrentPlayer(currentPlayer().toString())
-                .setNextPlayer(players.get((currentPlayerIndex + 1) % playerAmount).toString());
+        return new TurnResult().setCurrentPlayer(currentPlayer().toString()).setNextPlayer(players.get((currentPlayerIndex + 1) % playerAmount).toString());
     }
 
     private Player currentPlayer() {

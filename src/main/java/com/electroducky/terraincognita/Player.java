@@ -5,6 +5,8 @@ import com.electroducky.terraincognita.world.Coordinate;
 public class Player {
     private Coordinate position = new Coordinate(0, 0);
     private String name = "Bot";
+    private int ID;
+    static int IDCounter;
 
     public Player(String name) {
         this();
@@ -12,6 +14,7 @@ public class Player {
     }
 
     public Player() {
+        ID = ++IDCounter;
     }
 
     public void moveTo(Coordinate coordinate) {
@@ -24,6 +27,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return name + "#" + Integer.toHexString(hashCode() >> 16);
+        return name + "#" + ID;
     }
 }
